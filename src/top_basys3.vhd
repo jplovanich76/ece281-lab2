@@ -41,13 +41,13 @@ begin
         );
 
     -- Manually map logical segments (A-G in order) to Basys3 physical order
-    seg(0) <= seg_output(6);  -- A
-    seg(1) <= seg_output(5);  -- B
-    seg(2) <= seg_output(4);  -- C
+    seg(0) <= seg_output(0);  -- A
+    seg(1) <= seg_output(1);  -- B
+    seg(2) <= seg_output(2);  -- C
     seg(3) <= seg_output(3);  -- D
-    seg(4) <= seg_output(2);  -- E
-    seg(5) <= seg_output(1);  -- F
-    seg(6) <= seg_output(0);  -- G
+    seg(4) <= seg_output(4);  -- E
+    seg(5) <= seg_output(5);  -- F
+    seg(6) <= seg_output(6);  -- G
 
     -- Control the anodes: only the rightmost digit is active when btnC is pressed
     an <= "1110" when btnC = '1' else "1111";  -- Active-low: 0 = enable, 1 = disable
