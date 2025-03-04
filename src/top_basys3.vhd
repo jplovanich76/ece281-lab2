@@ -1,50 +1,55 @@
-
-library ieee;
-  use ieee.std_logic_1164.all;
-  use ieee.numeric_std.all;
-
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity top_basys3 is
-	port(
-		-- 7-segment display segments (cathodes CG ... CA)
-		seg		:	out std_logic_vector(6 downto 0);  -- seg(6) = CG, seg(0) = CA
+    Port (
+        -- 7-segment display segments (cathodes CG ... CA)
+        seg : out std_logic_vector(6 downto 0);  -- seg(6) = CG, ..., seg(0) = CA
 
-		-- 7-segment display active-low enables (anodes)
-		an      :	out std_logic_vector(3 downto 0);
+        -- 7-segment display active-low enables (anodes)
+        an : out std_logic_vector(3 downto 0);
 
-		-- Switches
-		sw		:	in  std_logic_vector(3 downto 0);
-		
-		-- Buttons
-		btnC	:	in	std_logic
+        -- Switches (4-bit hex input)
+        sw : in std_logic_vector(3 downto 0);
 
-	);
+        -- Buttons
+        btnC : in std_logic
+    );
 end top_basys3;
 
-architecture top_basys3_arch of top_basys3 is 
-	
-  -- declare the component of your top-level design
-  component sevenseg_decoder is
-    port(
-        i_Hex : in std_logic_vector(3 downto 0);
-        o_seg_n : out std_logic_vector(6 downto 0)
-        );
-        end component;
- 
-      signal seg_output : std_logic_vector(6 downto 0);
+architecture top_basys3_arch of top_basys3 is
 
-  
+    -- Declare the 7-segment decoder component
+    component sevenseg_decoder is
+        Port (
+            i_Hex   : in  STD_LOGIC_VECTOR (3 downto 0);
+            o_seg_n : out STD_LOGIC_VECTOR (6 downto 0)
+        );
+    end component;
+
+    -- Internal signal for logically ordered segment outputs (A-G)
+    signal seg_output : std_logic_vector(6 downto 0);
+
 begin
 
-    -- Instantiate the sevenseg_decoder
-    sevenseg_inst : sevenseg_decoder
-    port map(
-        i_Hex   => sw,          
-        o_seg_n => seg_output   
-    );
+    -- Instantiate the seven-segment decoder
+    seg_decoder_inst : sevenseg_decoder
+        port map (
+            i_Hex   => sw,
+            o_seg_n => seg_output
+        );
 
-    seg <= seg_output;
+    -- Manually map logical segments (A-G in order) to Basys3 physical order
+    seg(0) <= seg_output(6);  -- A
+    seg(1) <= seg_output(5);  -- B
+    seg(2) <= seg_output(4);  -- C
+    seg(3) <= seg_output(3);  -- D
+    seg(4) <= seg_output(2);  -- E
+    seg(5) <= seg_output(1);  -- F
+    seg(6) <= seg_output(0);  -- G
 
-    an <= "1110" when btnC = '1' else "1111"; 
+    -- Control the anodes: only the rightmost digit is active when btnC is pressed
+    an <= "1110" when btnC = '1' else "1111";  -- Active-low: 0 = enable, 1 = disable
 
 end top_basys3_arch;
