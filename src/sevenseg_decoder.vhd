@@ -37,7 +37,7 @@ begin
             "0000010" when "0110",  -- 6
             "1111000" when "0111",  -- 7
             "0000000" when "1000",  -- 8
-            "0000100" when "1001",  -- 9  
+            "0010000" when "1001",  -- 9  
             "1111111" when others; -- bad input check basically
             
 end Behavioral;
