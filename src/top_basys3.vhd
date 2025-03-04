@@ -30,6 +30,7 @@ architecture top_basys3_arch of top_basys3 is
 
     -- Internal signal for logically ordered segment outputs (A-G)
     signal seg_output : std_logic_vector(6 downto 0);
+    signal w_7SD_EN_n : std_logic;
 
 begin
 
@@ -50,6 +51,11 @@ begin
     seg(6) <= seg_output(0);  -- G
 
     -- Control the anodes: only the rightmost digit is active when btnC is pressed
-    an  <= (0 => w_7SD_EN_n, others => '1');
+    w_7SD_EN_n  <= not btnC;
+
+        an(0)   <= w_7SD_EN_n;
+        an(1)   <= '1';
+        an(2)   <= '1';
+        an(3)   <= '1';
 
 end top_basys3_arch;
