@@ -32,6 +32,7 @@ architecture top_basys3_arch of top_basys3 is
         end component;
  
       signal seg_output : std_logic_vector(6 downto 0);
+      signal w_7SD_EN_n : std_logic;
 
   
 begin
@@ -47,6 +48,7 @@ begin
     seg <= seg_output;
 
     -- Control the anodes: only the rightmost digit lights up when the button is pressed
-    an <= "1110" when btnC = '1' else "1111";  -- Active-low: 0 enables digit
+    w_7SD_EN_n <= not btnC;
+    an <= (0 => w_7SD_EN_n, others => '1');  -- Only enable the rightmost digit
 
 end top_basys3_arch;
