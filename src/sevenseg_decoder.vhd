@@ -1,23 +1,3 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 03/03/2025 06:24:57 PM
--- Design Name: 
--- Module Name: sevenseg_decoder - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -40,5 +20,24 @@ architecture Behavioral of sevenseg_decoder is
 
 begin
 
-
+    with i_Hex select
+        o_seg_n <=
+            "0001000" when "1010",  -- A; all these opposite of prelab because its active LOW
+            "1100000" when "1011",  -- B
+            "1110010" when "1100",  -- C
+            "1000010" when "1101",  -- D
+            "0110000" when "1110",  -- E
+            "0111000" when "1111",  -- F
+            "1000000" when "0000",  -- 0
+            "1111001" when "0001",  -- 1
+            "0100100" when "0010",  -- 2
+            "0110000" when "0011",  -- 3
+            "0011001" when "0100",  -- 4
+            "0010010" when "0101",  -- 5
+            "0000010" when "0110",  -- 6
+            "1111000" when "0111",  -- 7
+            "0000000" when "1000",  -- 8
+            "0010000" when "1001",  -- 9  
+            "1111111" when others; -- bad input check basically
+            
 end Behavioral;
