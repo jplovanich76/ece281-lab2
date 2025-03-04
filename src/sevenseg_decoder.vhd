@@ -37,7 +37,7 @@ begin
             "0001101" when "1100",  -- C
             "0111101" when "1101",  -- D
             "1001111" when "1110",  -- E
-            "1000111" when "1111"   -- F
+            "1000111" when "1111",   -- F
             "1111111" when others;  -- All segments off (invalid input)
             
 end Behavioral;
